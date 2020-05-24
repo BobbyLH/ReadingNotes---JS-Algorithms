@@ -21,8 +21,9 @@ class LinkedListNode {
 }
 ```
 
-### 进行比较的Comparator
+
 ```js
+// utils/comparator/Comparator
 class Comparator {
   constructor (compareFunction) {
     // this.compare 为比较方法，可以初始化时传入，否则使用默认的比较方法
@@ -92,9 +93,11 @@ class Comparator {
 ```
 
 ### 链表
+[Comparator 剖析](../utils/comparator.md)
+
 ```js
 import LinkedListNode from './LinkedListNode';
-import Comparator from './Comparator';
+import Comparator from '../../utils/comparator';
 
 class LinkedList {
   constructor (compareFunction) {
@@ -195,7 +198,7 @@ class LinkedList {
 }
 ```
 
-#### 时间复杂度
+## 时间复杂度
 | Access    | Search    | Insertion | Deletion  |
 | :-------: | :-------: | :-------: | :-------: |
 | O(n)      | O(n)      | O(1)      | O(n)      |
