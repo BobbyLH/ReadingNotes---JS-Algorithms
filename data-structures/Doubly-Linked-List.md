@@ -37,7 +37,7 @@ class DoublyLinkedList {
 
   /**
    * 往头部追加一个节点
-   * @param {*} value 新增节点的值
+   * @param {any} value 新增节点的值
    * @return {DoublyLinkedList}
    */
   prepend (value) {
@@ -59,7 +59,7 @@ class DoublyLinkedList {
 
   /**
    * 往尾部追加一个节点
-   * @param {*} value 新增节点的值
+   * @param {any} value 新增节点的值
    * @return {DoublyLinkedList}
    */
   append (value) {
@@ -85,7 +85,7 @@ class DoublyLinkedList {
 
   /**
    * 根据value删除 value与之相同的节点
-   * @param {*} value
+   * @param {any} value
    * @return {DoublyLinkedListNode}
    */
   delete (value) {
@@ -145,5 +145,156 @@ class DoublyLinkedList {
 
     return deleteNode; // 返回被删除的节点
   }
+
+  /**
+   * 根据value找出对应的节点
+   * @param {{ value: any; callback?: (value: any) => boolean; }} findParams
+   * @return {DoublyLinkedListNode}
+   */
+  find ({
+     value = undefined,
+     callback = undefined
+   }) {
+    if (!this.head) {
+      // 没有 this.head 证明链表内没有任何节点
+      return null;
+    }
+
+    let currentNode = this.head;
+
+    while (currentNode) {
+      // 指定了回调函数，则调用它来找出相应的节点
+      if (callback && callback(currentNode.value)) {
+        return currentNode;
+      }
+
+      // 如果指定了value，那么则根据value和当前遍历节点的value做对比
+      if (value !== undefined && this.compare.equal(currentNode.value, value)) {
+        return currentNode;
+      }
+
+      // 上述情况都不成立，则继续迭代，直至最后一个节点
+      currentNode = currentNode.next;
+    }
+
+    // 整个链表遍历下来都没找到对应的节点，则返回null
+    return null;
+  }
+
+  /**
+   * 删除最后一个节点
+   * @return {DoublyLinkedListNode}
+   */
+  deleteTail () {
+    if (!this.head) {
+      // 没有 this.head 证明链表内没有任何节点
+      return null
+    }
+
+    const deleteTail = this.tail; // 将当前 this.tail 保存起来
+    this.tail = this.tail.previous; // 将当前 this.tail 的上一个节点 previous 赋值给 this.tail
+    this.tail.next = null; // 将新的 this.tail 的 next 置空
+
+    return deleteTail;
+  }
+
+  /**
+   * 删除第一个节点
+   * @return {DoublyLinkedListNode}
+   */
+  deleteHead () {
+    if (!this.head) {
+      // 没有 this.head 证明链表内没有任何节点
+      return null
+    }
+
+    const deleteHead = this.head; // 将当前 this.head 保存起来
+
+    if (this.head.next) {
+      this.head = this.tail.next; // 将当前 this.head 的下一个节点 next 赋值给 this.head
+      this.tail.previous = null; // 将新的 this.head 的 previous 置空
+    } else {
+      // 边界情况：若当前 this.head 是唯一的节点的话
+      this.head = null;
+      this.tail = null;
+    }
+
+    return deleteHead;
+  }
+
+  /**
+   * 将链表的所有节点组装成一个数组后返回
+   * @return {DoublyLinkedListNode[]}
+   */
+  toArray (values) {
+    const nodes = [];
+
+    let currentNode = this.head;
+    while(currentNode) {
+      nodes.push(currentNode);
+      currentNode = currentNode.next;
+    }
+
+    return nodes;
+  }
+
+  /**
+   * 将一组数据添加为节点
+   * @param {any[]} values - 一组需要被添加成节点的值
+   * @return {DoublyLinkedList}
+   */
+  fromArray (values) {
+    values.forEach(value => this.append(value));
+
+    return this;
+  }
+
+  /**
+   * 将链表中所有节点的值转换成字符串
+   * @param {(value: any) => string} [callback]
+   * @return {string}
+   */
+  toString (callback) {
+    return this.toArray().map(node => node.toString(callback)).toString();
+  }
+
+  /**
+   * 将链表中节点的顺序完全颠倒
+   * @return {DoublyLinkedList}
+   */
+  reverse () {
+    let currNode = this.head; // 先从 this.head 开始
+    let prevNode = null;
+    let nextNode = null;
+
+    while (currNode) {
+      // 将 next 和 previous 指向的节点分别保存下来
+      nextNode = currNode.next;
+      prevNode = currNode.previous;
+
+      // 而后交换它们的位置
+      currNode.next = prevNode;
+      currNode.previous = nextNode;
+
+      // 每次保存当前节点，直到最后一个节点，而后会将这个节点赋值给 this.head
+      prevNode = currNode;
+      // 遍历下一个节点
+      currNode = nextNode;
+    }
+
+    this.tail = this.head;
+    this.head = prevNode;
+
+    return this;
+  }
 }
 ```
+
+## 复杂度
+### 时间复杂度
+| Access    | Search    | Insertion | Deletion  |
+| :-------: | :-------: | :-------: | :-------: |
+| O(n)      | O(n)      | O(1)      | O(n)      |
+
+### 空间复杂度
+O(n)

@@ -21,77 +21,6 @@ class LinkedListNode {
 }
 ```
 
-
-```js
-// utils/comparator/Comparator
-class Comparator {
-  constructor (compareFunction) {
-    // this.compare 为比较方法，可以初始化时传入，否则使用默认的比较方法
-    this.compare = compareFunction || Comparator.defaultCompareFunction;
-  }
-
-  /**
-   * Comparator 默认进行比较的静态方法，参数应该是字符串或者数字
-   * @param {(string|number)} a
-   * @param {(string|number)} b
-   * @returns {number}
-   */
-  static defaultCompareFunction (a, b) {
-    if (a === b) return 0;
-
-    return a < b ? -1 : 1;
-  }
-
-  /**
-   * 检验 "a" 和 "b" 是否相等
-   * @param {*} a
-   * @param {*} b
-   * @return {boolean}
-   */
-  equal(a, b) {
-    return this.compare(a, b) === 0;
-  }
-
-  /**
-   * 检验 "a" 是否比 "b" 小
-   * @param {*} a
-   * @param {*} b
-   * @return {boolean}
-   */
-  lessThan(a, b) {
-    return this.compare(a, b) < 0;
-  }
-
-  /**
-   * 检验 "a" 是否比 "b" 大
-   * @param {*} a
-   * @param {*} b
-   * @return {boolean}
-   */
-  greaterThan(a, b) {
-    return this.compare(a, b) > 0;
-  }
-
-  /**
-   * 检验 "a" 是否大于等于 "b"
-   * @param {*} a
-   * @param {*} b
-   * @return {boolean}
-   */
-  greaterThanOrEqual(a, b) {
-    return this.greaterThan(a, b) || this.equal(a, b);
-  }
-
-  /**
-   * 颠倒 this.compare 最终入参的顺序，即将不相等的比较结果翻转
-   */
-  reverse() {
-    const compareOriginal = this.compare;
-    this.compare = (a, b) => compareOriginal(b, a);
-  }
-}
-```
-
 ### 链表
 [Comparator 剖析](../utils/comparator.md)
 
@@ -109,7 +38,7 @@ class LinkedList {
 
   /**
    * 往头部追加一个节点
-   * @param {*} value 新增节点的值
+   * @param {any} value 新增节点的值
    * @return {LinkedList}
    */
   prepend (value) {
@@ -130,7 +59,7 @@ class LinkedList {
 
   /**
    * 往尾部追加一个节点
-   * @param {*} value 新增节点的值
+   * @param {any} value 新增节点的值
    * @return {LinkedList}
    */
   append (value) {
@@ -154,7 +83,7 @@ class LinkedList {
 
   /**
    * 删除指定值的节点
-   * @param {*} value 删除节点的值
+   * @param {any} value 删除节点的值
    * @return {LinkedListNode}
    */
   delete (value) {
@@ -198,7 +127,11 @@ class LinkedList {
 }
 ```
 
-## 时间复杂度
+## 复杂度
+### 时间复杂度
 | Access    | Search    | Insertion | Deletion  |
 | :-------: | :-------: | :-------: | :-------: |
 | O(n)      | O(n)      | O(1)      | O(n)      |
+
+### 空间复杂度
+O(n)

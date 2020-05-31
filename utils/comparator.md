@@ -21,8 +21,8 @@ class Comparator {
 
   /**
    * 检验 "a" 和 "b" 是否相等
-   * @param {*} a
-   * @param {*} b
+   * @param {any} a
+   * @param {any} b
    * @return {boolean}
    */
   equal(a, b) {
@@ -31,8 +31,8 @@ class Comparator {
 
   /**
    * 检验 "a" 是否比 "b" 小
-   * @param {*} a
-   * @param {*} b
+   * @param {any} a
+   * @param {any} b
    * @return {boolean}
    */
   lessThan(a, b) {
@@ -41,8 +41,8 @@ class Comparator {
 
   /**
    * 检验 "a" 是否比 "b" 大
-   * @param {*} a
-   * @param {*} b
+   * @param {any} a
+   * @param {any} b
    * @return {boolean}
    */
   greaterThan(a, b) {
@@ -51,8 +51,8 @@ class Comparator {
 
   /**
    * 检验 "a" 是否大于等于 "b"
-   * @param {*} a
-   * @param {*} b
+   * @param {any} a
+   * @param {any} b
    * @return {boolean}
    */
   greaterThanOrEqual(a, b) {

@@ -8,6 +8,8 @@
 
 - [双链表](./data-structures/Doubly-Linked-List.md)
 
+- [队列](./data-structures/Queue.md)
+
 ### 进阶
 
 ## 算法篇
