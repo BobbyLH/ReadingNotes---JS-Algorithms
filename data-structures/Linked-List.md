@@ -124,6 +124,13 @@ class LinkedList {
 
     return deleteNode; // 返回最后一个被删除的节点，可能是 null
   }
+
+  /**
+   * @param {Object} findParams
+   * @param {*} findParams.value
+   * @param {function} [findParams.callback]
+   * @return {LinkedListNode}
+   */
 }
 ```
 
