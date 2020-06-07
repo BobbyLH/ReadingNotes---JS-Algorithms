@@ -258,7 +258,7 @@ class LinkedList {
       // 将当前节点的 next 指向的节点保存下来
       nextNode = currNode.next;
 
-      // 而后交换它们的位置
+      // 而后交换next和当前节点的位置
       currNode.next = prevNode;
 
       // 每次保存当前节点，直到最后一个节点，而后会将这个节点赋值给 this.head

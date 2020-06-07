@@ -10,6 +10,8 @@
 
 - [队列](./data-structures/Queue.md)
 
+- [栈](./data-structures/Stack.md)
+
 ### 进阶
 
 ## 算法篇
