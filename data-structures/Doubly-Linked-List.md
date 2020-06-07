@@ -230,7 +230,7 @@ class DoublyLinkedList {
     const nodes = [];
 
     let currentNode = this.head;
-    while(currentNode) {
+    while (currentNode) {
       nodes.push(currentNode);
       currentNode = currentNode.next;
     }
@@ -282,6 +282,7 @@ class DoublyLinkedList {
       currNode = nextNode;
     }
 
+    // 最后一步是重置 this.head 和 this.tail
     this.tail = this.head;
     this.head = prevNode;
 

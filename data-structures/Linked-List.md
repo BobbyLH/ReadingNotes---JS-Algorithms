@@ -126,11 +126,153 @@ class LinkedList {
   }
 
   /**
-   * @param {Object} findParams
-   * @param {*} findParams.value
-   * @param {function} [findParams.callback]
+   * 根据 value 找出节点
+   * @param {{ value: any; callback?: (value: any) => boolean; }} findParams
    * @return {LinkedListNode}
    */
+  find ({value = undefined, callback = undefined}) {
+    if (!this.head) return null; // 没有 this.head 证明链表内没有任何节点
+
+    while (currentNode) {
+      // 指定了回调函数，则调用它来找出相应的节点
+      if (callback && callback(currentNode.value)) {
+        return currentNode;
+      }
+
+      // 如果指定了value，那么则根据value和当前遍历节点的value做对比
+      if (value !== undefined && this.compare.equal(currentNode.value, value)) {
+        return currentNode;
+      }
+
+      // 上述情况都不成立，则继续迭代，直至最后一个节点
+      currentNode = currentNode.next;
+    }
+
+    // 整个链表遍历下来都没找到对应的节点，则返回null
+    return null;
+  }
+
+  /**
+   * 删除最后一个节点
+   * @return {LinkedListNode}
+   */
+  deleteTail () {
+    const deleteTail = this.tail;
+
+    if (this.head === deleteTail) {
+      // 处理边界情况 —— 链表中只有一个元素
+      this.head = null;
+      this.tail = null;
+
+      return deleteTail;
+    }
+
+    let currentNode = this.head;
+    while (currentNode.next) {
+      if (!currentNode.next.next) {
+        // 该节点的 next 就是 this.tail
+        // 即该节点是 this.tail 的上一个节点
+        // 移除它们之间的关联
+        currentNode.next = null;
+      } else {
+        currentNode = currentNode.next;
+      }
+    }
+
+    // this.tail 指向它的上一个节点
+    this.tail = currentNode;
+
+    return deleteTail;
+  }
+
+  /**
+   * 删除第一个节点
+   * @return {LinkedListNode}
+   */
+  deleteHead () {
+    if (!this.head) {
+      // 没有 this.head 证明链表内没有任何节点
+      return null
+    }
+
+    const deleteHead = this.head;
+
+    if (this.head.next) {
+      // this.head 指向它的下一个节点
+      this.head = this.head.next;
+    } else {
+      // 边界情况 —— 只有一个元素
+      this.head = null;
+      this.tail = null;
+    }
+
+    return deleteHead;
+  }
+
+  /**
+   * 将一组数据添加为节点
+   * @param {any[]} values - 一组需要被添加成节点的值
+   * @return {LinkedListNode}
+   */
+  fromArray (values) {
+    values.forEach(value => this.append(value));
+
+    return this;
+  }
+
+  /**
+   * 将链表的所有节点组装成一个数组后返回
+   * @return {LinkedListNode[]}
+   */
+  toArray (values) {
+    const nodes = [];
+
+    let currentNode = this.head;
+    while (currentNode) {
+      nodes.push(currentNode);
+      currentNode = currentNode.next;
+    }
+
+    return nodes;
+  }
+
+  /**
+   * 将链表中所有节点的值转换成字符串
+   * @param {(value: any) => string} [callback]
+   * @return {string}
+   */
+  toString (callback) {
+    return this.toArray().map(node => node.toString(callback)).toString();
+  }
+
+  /**
+   * 将链表中节点的顺序完全颠倒
+   * @return {LinkedList}
+   */
+  reverse () {
+    let currNode = this.head; // 先从 this.head 开始
+    let prevNode = null;
+    let nextNode = null;
+
+    while (currNode) {
+      // 将当前节点的 next 指向的节点保存下来
+      nextNode = currNode.next;
+
+      // 而后交换它们的位置
+      currNode.next = prevNode;
+
+      // 每次保存当前节点，直到最后一个节点，而后会将这个节点赋值给 this.head
+      prevNode = currNode;
+      // 遍历下一个节点
+      currNode = nextNode;
+    }
+
+    // 最后一步是重置 this.head 和 this.tail
+    this.tail = this.head;
+    this.head = prevNode;
+
+    return this;
+  }
 }
 ```
 
