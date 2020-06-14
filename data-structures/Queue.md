@@ -1,5 +1,5 @@
 # 队列(Queue)
-**队列** 是一种特殊的数据结构，它严格遵循“先进先出(First-In-First-Out FIFO)”的原则，添加到队列中的操作被称为入队(enqueue)，移除出队列的操作被称为出队(dequeue)。通常还会支持一些诸如 查看最前面要出队元素 的操作，但不会哦将元素移除出队列。可以将队列理解成是一个线性的数据结构，或者更抽象地说是一个顺序结合。
+**队列** 是一种特殊的数据结构，它严格遵循“先进先出(First-In-First-Out FIFO)”的原则，添加到队列中的操作被称为入队(enqueue)，移除出队列的操作被称为出队(dequeue)。通常还会支持一些诸如 *查看最前面要出队元素(peek)* 的操作，但不会将元素移除出队列。可以将队列理解成是一个线性的数据结构，或者更抽象地说是一个顺序结合。
 
 ## 代码剖析
 
@@ -16,6 +16,7 @@ export default class Queue {
   }
 
   /**
+   * 检查 Queue 是否为空
    * @return {boolean}
    */
   isEmpty () {
@@ -25,11 +26,11 @@ export default class Queue {
 
   /**
    * 读取排在队列头上的元素的值
-   * @return {*}
+   * @return {any}
    */
   peek () {
     // 空队列
-    if (this.isEmpty) return null;
+    if (this.isEmpty()) return null;
 
     return this.linkedList.head.value;
   }
@@ -37,7 +38,7 @@ export default class Queue {
   /**
    * 入队，即将元素添加至队列尾巴处(链表的 this.tail)
    * 按照 FIFO 的规则，要等到前面其他元素都出队后，该元素才能出队
-   * @param {*} value
+   * @param {any} value
    */
   enqueue (value) {
     this.linkedList.append(value);
@@ -45,7 +46,7 @@ export default class Queue {
 
   /**
    * 出队，即将队列的第一个元素移除(链表的 this.head)
-   * @return {*}
+   * @return {any}
    */
   dequeue () {
     const removedHead = this.linkedList.deleteHead();
