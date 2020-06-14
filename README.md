@@ -12,6 +12,8 @@
 
 - [栈](./data-structures/Stack.md)
 
+- [哈希表](./data-structures/Hash-Table.md)
+
 ### 进阶
 
 ## 算法篇
