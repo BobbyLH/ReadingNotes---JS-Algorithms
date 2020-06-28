@@ -14,6 +14,8 @@
 
 - [哈希表](./data-structures/Hash-Table.md)
 
+- [堆](./data-structures/Heap.md)
+
 ### 进阶
 
 ## 算法篇
