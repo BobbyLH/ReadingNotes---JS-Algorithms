@@ -105,6 +105,67 @@ export default class Heap {
   parent (childIndex) {
     return this.heapContainer[getParentIndex(parentIndex)];
   }
+
+  /**
+   * 交换两个节点的位置
+   * @param {number} indexOne 节点一的位置
+   * @param {number} indexTwo 节点二的位置
+   */
+  swap (indexOne, indexTwo) {
+    const tmp = this.heapContainer[indexTwo];
+    this.heapContainer[indexTwo] = this.heapContainer[indexOne];
+    this.heapContainer[indexOne] = tmp;
+  }
+
+  /**
+   * 在不修改数据结构的情况下，返回根节点
+   * @return {any} 根节点
+   */
+  peek () {
+    if (this.heapContainer.length === 0) {
+      // 没有任何节点
+      return null;
+    }
+
+    return this.heapContainer[0];
+  }
+
+  /**
+   * 将颠倒头尾，在重新调整数据结构后，并返回根节点
+   * @return {any} 根节点
+   */
+  poll () {
+    if (this.heapContainer.length === 0) {
+      // 没有任何节点
+      return null;
+    }
+
+    if (this.heapContainer.length === 1) {
+      //　只有根节点
+      return this.heapContainer.pop();
+    }
+
+    const item = this.heapContainer[0];
+
+    // 将最后的一个元素移到第一位
+    this.heapContainer[0] = this.heapContainer.pop();
+    // 从头到尾重新排序
+    this.heapifyDown();
+
+    return item;
+  }
+
+  /**
+   * 添加节点到堆中
+   * @param {any} 添加的节点
+   * @return {Heap} 返回整个堆
+   */
+  add (item) {
+    this.heapContainer.push(item);
+    // 从尾到头重新排序
+    this.heapifyUp();
+    return this;
+  }
 }
 ```
 
