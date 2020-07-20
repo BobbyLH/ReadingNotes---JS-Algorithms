@@ -5,11 +5,12 @@
 
 ## 代码剖析
 
+### 优先队列
 [Comparator 剖析](../utils/comparator.md)
 
 [堆](./Heap.md)
 
-### 优先队列
+
 ```js
 import { MinHeap } from './Heap';
 import Comparator from '../../utils/comparator';

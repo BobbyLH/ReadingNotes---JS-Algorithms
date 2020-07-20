@@ -9,8 +9,9 @@
 
 ## 代码剖析
 
-[Comparator 剖析](../utils/comparator.md)
 ### 堆
+[Comparator 剖析](../utils/comparator.md)
+
 ```js
 import Comparator from '../../utils/comparator';
 
