@@ -16,6 +16,8 @@
 
 - [堆](./data-structures/Heap.md)
 
+- [优先队列](./data-structures/Priority-Queue.md)
+
 ### 进阶
 
 ## 算法篇
