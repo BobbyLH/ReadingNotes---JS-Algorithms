@@ -250,6 +250,6 @@ export default class PriorityQueue extends MinHeap {
 ```
 
 ### 引用的部分
-- [Comparator 剖析](../utils/comparator.md)
+- [Comparator](../utils/comparator.md)
 
 - [堆](./Heap.md)
