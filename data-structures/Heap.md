@@ -8,6 +8,8 @@
   3. 最顶部，没有父节点的节点，被称为“根节点”。
 
 ## 代码剖析
+<details>
+<summary>展开查看</summary>
 
 ### Heap 类 - 堆
 - 使用数组实现即可
@@ -436,6 +438,7 @@
       throw new Error('请定义子类的 pairIsInCorrectOrder 方法!');
     }
   ```
+</details>
 
 ### 完整的代码
 

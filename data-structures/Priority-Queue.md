@@ -4,9 +4,11 @@
 尽管 **优先队列** 通常是用 **堆** 来实现的，但是它们在本质上有很大的区别。优先队列和 “列表(list)”、“图(map)” 一样都是一个抽象的概念；就像一个列表能够用链表或数组来实现一样，一个优先队列也能够用堆或者其他方式来实现，就比如无序的数组。
 
 ## 代码剖析
+<details>
+<summary>展开查看</summary>
 
 ### PriorityQueue 类 - 优先队列
-- 继承自 [MinHeap](https://github.com/BobbyLH/ReadingNotes---JS-Algorithms/blob/master/data-structures/Heap.md#%E5%B0%8F%E5%A0%86)
+- 继承自 [MinHeap](https://github.com/BobbyLH/ReadingNotes---JS-Algorithms/blob/master/data-structures/Heap.md#minheap-%E7%B1%BB---%E5%B0%8F%E5%A0%86)
 
 - 重写了父类的 `this.compare` 方法
 
@@ -32,7 +34,7 @@
   ```
 
 #### add - 添加元素
-- 重写了[父类的 add](https://github.com/BobbyLH/ReadingNotes---JS-Algorithms/blob/master/data-structures/Heap.md) 方法
+- 重写了父类的 [add](https://github.com/BobbyLH/ReadingNotes---JS-Algorithms/blob/master/data-structures/Heap.md#add---%E6%B7%BB%E5%8A%A0%E8%8A%82%E7%82%B9%E5%88%B0%E5%A0%86%E4%B8%AD) 方法
 
 - 将元素添加到优先队列中，添加的元素会按照指定的优先级(默认为0)进行排序
 
@@ -59,7 +61,7 @@
 #### remove - 删除元素
 - 移除优先队列中的某个元素
 
-- 重写了[父类的 remove](https://github.com/BobbyLH/ReadingNotes---JS-Algorithms/blob/master/data-structures/Heap.md) 方法
+- 重写了父类的 [remove](https://github.com/BobbyLH/ReadingNotes---JS-Algorithms/blob/master/data-structures/Heap.md#remove---%E6%A0%B9%E6%8D%AE%E4%BC%A0%E5%85%A5%E7%9A%84%E8%8A%82%E7%82%B9%E5%88%A0%E9%99%A4%E5%85%B6%E5%9C%A8%E5%A0%86%E4%B8%AD%E6%89%80%E5%AF%B9%E5%BA%94%E7%9A%84%E5%85%A8%E9%83%A8%E8%8A%82%E7%82%B9) 方法
 
 - 删除元素后会按照优先级重新进行排序
 
@@ -176,6 +178,7 @@
       return a < b ? -1 : 1;
     }
   ```
+</details>
 
 ### 完整的代码
 
