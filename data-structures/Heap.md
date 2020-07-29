@@ -8,8 +8,8 @@
   3. 最顶部，没有父节点的节点，被称为“根节点”。
 
 ## 代码剖析
-<details>
-<summary>展开查看 Heap</summary>
+<details open>
+<summary>展开查看</summary>
 
 ### Heap 类 - 堆
 - 使用数组实现即可
@@ -442,6 +442,9 @@
 
 ## 完整的代码
 
+<details>
+<summary>展开查看</summary>
+
 ```js
 import Comparator from '../../utils/comparator';
 
@@ -667,9 +670,13 @@ export default class Heap {
   }
 }
 ```
+</details>
 
 ### MinHeap 类 - 小堆
 - 实现的差异主要是在：`this.pairIsInCorrectOrder` 方法中 **第一个节点总是小于或等于第二个节点**
+
+<details>
+<summary>展开查看</summary>
 
 ```js
 import Heap from './Heap';
@@ -686,9 +693,13 @@ export default class MinHeap extends Heap {
   }
 }
 ```
+</details>
 
 ### MaxHeap 类 - 大堆
 - 实现的差异主要是在：`this.pairIsInCorrectOrder` 方法中 **第一个节点总是大于或等于第二个节点**
+
+<details>
+<summary>展开查看</summary>
 
 ```js
 import Heap from './Heap';
@@ -705,6 +716,7 @@ export default class MaxHeap extends Heap {
   }
 }
 ```
+</details>
 
 ## 引用的部分
 - [Comparator](../utils/comparator.md)
