@@ -5,11 +5,179 @@
 
 ## 代码剖析
 
-### 优先队列
-[Comparator 剖析](../utils/comparator.md)
+### PriorityQueue 类 - 优先队列
+- 继承自 [MinHeap](https://github.com/BobbyLH/ReadingNotes---JS-Algorithms/blob/master/data-structures/Heap.md#%E5%B0%8F%E5%A0%86)
 
-[堆](./Heap.md)
+- 重写了父类的 `this.compare` 方法
 
+- 用 [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) 数据结构来保存优先级的映射关系
+
+  ```js
+  class PriorityQueue extends MinHeap {
+    constructor () {
+      // 调用父类的构造函数
+      super();
+
+      // 构造一个 Map，用来保存优先级的映射关系
+      // 用Map数据结构储存数据，能确保即便是复杂类型的值，也是唯一的，不会被隐式转换
+      this.priority = new Map();
+
+      // 使用自定义的比较方法，兼容带有优先级的比较，而不是使用默认的用 value 的大小来进行比较
+      // 即意味着说，父类的 find、pairIsInCorrectOrder 等方法都会受到影响
+      // 底层的堆的顺序，是按照优先级而不是值的大小来排序
+      this.compare = new Comparator(this.comparePriority.bind(this));
+    }
+    //……
+  }
+  ```
+
+#### add - 添加元素
+- 重写了[父类的 add](https://github.com/BobbyLH/ReadingNotes---JS-Algorithms/blob/master/data-structures/Heap.md) 方法
+
+- 将元素添加到优先队列中，添加的元素会按照指定的优先级(默认为0)进行排序
+
+- 入参：
+    - `item` <any> 待新增的元素
+
+    - `priority` <number> 待新增的元素的优先级，默认为 `0`
+
+- 出参(Returns)：<PriorityQueue> 返回优先队列的整个实例
+
+  ```js
+    add (item, priority = 0) {
+      // 往 Map 里 存储元素和优先级的映射关系
+      // key 值为添加的元素
+      // value 值为元素的优先级
+      this.priority.set(item, priority);
+      // 调用父类的 add 方法
+      // 即往一个数组中推入该元素，并按照优先级的顺序进行排序，因为在 constructor 里面已经重新了 this.compare
+      super.add(item);
+      return this;
+    }
+  ```
+
+#### remove - 删除元素
+- 移除优先队列中的某个元素
+
+- 重写了[父类的 remove](https://github.com/BobbyLH/ReadingNotes---JS-Algorithms/blob/master/data-structures/Heap.md) 方法
+
+- 删除元素后会按照优先级重新进行排序
+
+- 入参：
+    - `item` <any> 待新增的元素
+
+    - `customFindingComparator` <Comparator> 自定义的比较方法，即可以按照 *优先级* 或 *值* 来移除某个(些)元素
+
+- 出参(Returns)：<PriorityQueue> 返回优先队列的整个实例
+
+  ```js
+    remove (item, customFindingComparator) {
+      // 调用父类的 remove 方法，移除所有匹配的元素，并重新排序
+      super.remove(item, customFindingComparator);
+      this.priority.delete(item);
+      return this;
+    }
+  ```
+
+#### changePriority - 改变优先级
+- 改变优先队列中某个元素的优先级
+
+- 元素的优先级改变其实是先移除后新增的一个过程
+
+- 入参：
+    - `item` <any> 待改变的元素
+
+    - `priority` <number> 元素的优先级，因 `this.add` 中的默认值为 `0`，故而其默认也为 `0`
+
+- 出参(Returns)：<PriorityQueue> 返回优先队列的整个实例
+
+  ```js
+    changePriority (item, priority) {
+      // 先移除这个元素
+      this.remove(item, new Comparator(this.compareValue));
+      // 绑定优先级后再次添加到优先队列中
+      this.add(item, priority);
+      return this;
+    }
+  ```
+
+#### findByValue - 根据值而不是优先级筛选出元素
+- 顾名思义，根据 value 值筛选出所有匹配的元素索引
+
+- 和继承的 find 方法有区别
+
+- 入参：
+    - `item` <any> 待改变的元素
+
+- 出参(Returns)：<number[]> 返回所有匹配元素的索引列表
+
+  ```js
+    findByValue (item) {
+      return this.find(item, new Comparator(this.compareValue));
+    }
+  ```
+
+#### hasValue - 检查元素是否存在
+- 判断的依据是：是否在堆中找到了该元素的索引
+
+- 入参：
+    - `item` <any> 待查询的元素
+
+- 出参(Returns)：<boolean> 元素是否存在
+
+  ```js
+    hasValue (item) {
+      return this.findByValue(item).length > 0;
+    }
+  ```
+
+#### comparePriority - 根据优先级比较元素
+- 数值越大，优先级越高
+
+- 入参：
+    - `a` <any> 待比较的元素a
+
+    - `b` <any> 待比较的元素b
+
+- 出参(Returns)：<number>
+    - `0` 相等；
+
+    - `1` a大于b；
+
+    - `-1` a小于b。
+
+  ```js
+    comparePriority (a, b) {
+      if (this.priority.get(a) === this.priority.get(b)) {
+        return 0;
+      }
+
+      return this.priority.get(a) < this.priority.get(b) ? -1 : 1;
+    }
+  ```
+
+#### compareValue - 根据元素的值进行比较
+- 入参：
+    - `a` <any> 待比较的元素a
+
+    - `b` <any> 待比较的元素b
+
+- 出参(Returns)：<number>
+    - `0` 相等；
+
+    - `1` a大于b；
+
+    - `-1` a小于b。
+
+  ```js
+    compareValue (a, b) {
+      if (a === b) return 0;
+
+      return a < b ? -1 : 1;
+    }
+  ```
+
+### 完整的代码
 
 ```js
 import { MinHeap } from './Heap';
@@ -29,32 +197,17 @@ export default class PriorityQueue extends MinHeap {
     this.compare = new Comparator(this.comparePriority.bind(this));
   }
 
-  /**
-   * 重写了 add 方法
-   * 将元素添加到优先队列中
-   * @param {any} item
-   * @param {number} priority
-   * @return {PriorityQueue}
-   */
   add (item, priority = 0) {
-    // 用Map数据结构储存数据，能确保即便是复杂类型的值，也是唯一的，不会被隐式转换
+    // 往 Map 里 存储元素和优先级的映射关系
     // key 值为添加的元素
     // value 值为元素的优先级
     this.priority.set(item, priority);
     // 调用父类的 add 方法
     // 即往一个数组中推入该元素，并按照优先级的顺序进行排序，因为在 constructor 里面已经重新了 this.compare
-    // 详见 Heap: https://github.com/BobbyLH/ReadingNotes---JS-Algorithms/blob/master/data-structures/Heap.md
     super.add(item);
     return this;
   }
 
-  /**
-   * 重写了 remove 方法
-   * 移除优先队列中的某个元素
-   * @param {any} item
-   * @param {Comparator} customFindingComparator
-   * @return {PriorityQueue}
-   */
   remove (item, customFindingComparator) {
     // 调用父类的 remove 方法，移除所有匹配的元素，并重新排序
     super.remove(item, customFindingComparator);
@@ -62,12 +215,6 @@ export default class PriorityQueue extends MinHeap {
     return this;
   }
 
-  /**
-   * 改变优先队列中某个元素的优先级
-   * @param {any} item
-   * @param {number} priority
-   * @return {PriorityQueue}
-   */
   changePriority (item, priority) {
     // 先移除这个元素
     this.remove(item, new Comparator(this.compareValue));
@@ -76,34 +223,16 @@ export default class PriorityQueue extends MinHeap {
     return this;
   }
 
-
-  /**
-   * 和继承的 find 方法区别
-   * 根据 value 值筛选出所有匹配的元素索引
-   * @param {any} item
-   * @return {number[]}
-   */
   findByValue (item) {
     // 返回所有匹配元素的索引列表
     return this.find(item, new Comparator(this.compareValue));
   }
 
-  /**
-   * 检查元素是否存在
-   * @param {any} item
-   * @return {boolean}
-   */
   hasValue (item) {
     // 判断的依据是：是否在堆中找到了该元素的索引
     return this.findByValue(item).length > 0;
   }
 
-  /**
-   * 根据优先级比较元素
-   * @param {any} a
-   * @param {any} b
-   * @return {number}
-   */
   comparePriority (a, b) {
     if (this.priority.get(a) === this.priority.get(b)) {
       return 0;
@@ -112,12 +241,6 @@ export default class PriorityQueue extends MinHeap {
     return this.priority.get(a) < this.priority.get(b) ? -1 : 1;
   }
 
-  /**
-   * 根据元素的值进行比较
-   * @param {any} a
-   * @param {any} b
-   * @return {number}
-   */
   compareValue (a, b) {
     if (a === b) return 0;
 
@@ -126,3 +249,7 @@ export default class PriorityQueue extends MinHeap {
 }
 ```
 
+### 引用的部分
+- [Comparator 剖析](../utils/comparator.md)
+
+- [堆](./Heap.md)
