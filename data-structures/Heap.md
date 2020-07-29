@@ -9,7 +9,7 @@
 
 ## 代码剖析
 <details>
-<summary>展开查看</summary>
+<summary>展开查看 Heap</summary>
 
 ### Heap 类 - 堆
 - 使用数组实现即可
@@ -440,7 +440,7 @@
   ```
 </details>
 
-### 完整的代码
+## 完整的代码
 
 ```js
 import Comparator from '../../utils/comparator';
@@ -706,5 +706,5 @@ export default class MaxHeap extends Heap {
 }
 ```
 
-### 引用的部分
+## 引用的部分
 - [Comparator](../utils/comparator.md)
