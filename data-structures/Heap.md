@@ -675,48 +675,48 @@ export default class Heap {
 ### MinHeap 类 - 小堆
 - 实现的差异主要是在：`this.pairIsInCorrectOrder` 方法中 **第一个节点总是小于或等于第二个节点**
 
-<details>
-<summary>展开查看</summary>
+  <details>
+  <summary>展开查看</summary>
 
-```js
-import Heap from './Heap';
+  ```js
+  import Heap from './Heap';
 
-export default class MinHeap extends Heap {
-  /**
-   * 检查堆的两个节点之间的位置是否正确
-   * @param {any} firstElement
-   * @param {any} secondElement
-   * @return {boolean}
-   */
-  pairIsInCorrectOrder (firstElement, secondElement) {
-    return this.compare.lessThannOrEqual(firstElement, secondElement);
+  export default class MinHeap extends Heap {
+    /**
+     * 检查堆的两个节点之间的位置是否正确
+     * @param {any} firstElement
+     * @param {any} secondElement
+     * @return {boolean}
+     */
+    pairIsInCorrectOrder (firstElement, secondElement) {
+      return this.compare.lessThannOrEqual(firstElement, secondElement);
+    }
   }
-}
-```
-</details>
+  ```
+  </details>
 
 ### MaxHeap 类 - 大堆
 - 实现的差异主要是在：`this.pairIsInCorrectOrder` 方法中 **第一个节点总是大于或等于第二个节点**
 
-<details>
-<summary>展开查看</summary>
+  <details>
+  <summary>展开查看</summary>
 
-```js
-import Heap from './Heap';
+  ```js
+  import Heap from './Heap';
 
-export default class MaxHeap extends Heap {
-  /**
-   * 检查堆的两个节点之间的位置是否正确
-   * @param {any} firstElement
-   * @param {any} secondElement
-   * @return {boolean}
-  */
-  pairIsInCorrectOrder (firstElement, secondElement) {
-    return this.compare.greaterThanOrEqual(firstElement, secondElement);
+  export default class MaxHeap extends Heap {
+    /**
+     * 检查堆的两个节点之间的位置是否正确
+     * @param {any} firstElement
+     * @param {any} secondElement
+     * @return {boolean}
+    */
+    pairIsInCorrectOrder (firstElement, secondElement) {
+      return this.compare.greaterThanOrEqual(firstElement, secondElement);
+    }
   }
-}
-```
-</details>
+  ```
+  </details>
 
 ## 引用的部分
 - [Comparator](../utils/comparator.md)
