@@ -4,7 +4,7 @@
 一个最基本的节点元素应该由它包含的数据和指向下一个元素的引用(指针)而组成，这样的数据结构对于 插入 和 删除 操作比较高效；而它的不足在于所花费的时间都是线性的，这也导致难以管道化(pipeline)，而且对于快速访问，比如随机访问，是受到限制的。和链表相比，数组在 高速缓存定位(cache locality) 方面有更好的表现。
 
 ## 代码剖析
-<details>
+<details open>
 <summary>展开查看</summary>
 
 ### LinkedListNode 类 - 节点
@@ -155,7 +155,7 @@
 - 使用 `this.compare.equal` 方法，找出和参数 value 匹配的节点
 
 - 入参：
-    - `{ value: any; callback?: (value: any) => boolean; }` <Object> 查找的参数
+    - `findParams` <{ value: any; callback?: (value: any) => boolean; }> 查找的参数
 
 - 出参(Returns)：<LinkedListNode> 返回匹配的节点
 
@@ -289,7 +289,7 @@
 - 最终对整个数组调用 `toString` 方法，将整个数组隐式转换成字符串
 
 - 入参：
-    - `{(value: any) => string}` <Function> 自定义用于将节点转换成字符的回调函数
+    - `callback` <(value: any) => string> 自定义用于将节点转换成字符的回调函数
 
 - 出参(Returns)：<string> 返回整个字符化后的链表
 
