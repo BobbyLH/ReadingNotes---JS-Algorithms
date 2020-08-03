@@ -4,8 +4,7 @@
 一个最基本的节点元素应该由它包含的数据和指向下一个元素的引用(指针)而组成，这样的数据结构对于 插入 和 删除 操作比较高效；而它的不足在于所花费的时间都是线性的，这也导致难以管道化(pipeline)，而且对于快速访问，比如随机访问，是受到限制的。和链表相比，数组在 高速缓存定位(cache locality) 方面有更好的表现。
 
 ## 代码剖析
-
-<details open>
+<details>
 <summary>展开查看</summary>
 
 ### LinkedListNode 类 - 节点
@@ -331,15 +330,13 @@
       return this;
     }
   ```
-
 </details>
 
 ## 完整的代码
-
 <details>
 <summary>展开查看</summary>
 
-### 子节点
+### 节点
 ```js
 class LinkedListNode {
   constructor (value, next = null) {
@@ -561,6 +558,7 @@ class LinkedList {
   }
 }
 ```
+</details>
 
 ## 引用的部分
 - [Comparator](../utils/comparator.md)
