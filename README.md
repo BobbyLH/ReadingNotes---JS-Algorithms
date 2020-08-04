@@ -19,6 +19,6 @@
 - [优先队列](./data-structures/Priority-Queue.md)
 
 ### 进阶
-- [字典树](./data-structures/Tire.md)
+- [字典树](./data-structures/Trie.md)
 
 ## 算法篇
