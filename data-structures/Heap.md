@@ -9,7 +9,7 @@
 
 ## 代码剖析
 <details open>
-<summary>收起/查看</summary>
+<summary>收起 / 展开</summary>
 
 ### Heap 类 - 堆
 - 使用数组实现即可
@@ -442,7 +442,7 @@
 
 ## 完整的代码
 <details>
-<summary>收起/查看</summary>
+<summary>收起 / 展开</summary>
 
 ```js
 import Comparator from '../../utils/comparator';

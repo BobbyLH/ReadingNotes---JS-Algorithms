@@ -9,7 +9,7 @@
 
 ## 代码剖析
 <details open>
-<summary>收起/查看</summary>
+<summary>收起 / 展开</summary>
 
 ### TireNode 类 - 字典树节点
 

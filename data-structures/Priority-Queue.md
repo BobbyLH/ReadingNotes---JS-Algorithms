@@ -5,7 +5,7 @@
 
 ## 代码剖析
 <details open>
-<summary>收起/查看</summary>
+<summary>收起 / 展开</summary>
 
 ### PriorityQueue 类 - 优先队列
 - 继承自 [MinHeap](https://github.com/BobbyLH/ReadingNotes---JS-Algorithms/blob/master/data-structures/Heap.md#minheap-%E7%B1%BB---%E5%B0%8F%E5%A0%86)
@@ -182,7 +182,7 @@
 
 ## 完整的代码
 <details>
-<summary>收起/查看</summary>
+<summary>收起 / 展开</summary>
 
 ```js
 import { MinHeap } from './Heap';

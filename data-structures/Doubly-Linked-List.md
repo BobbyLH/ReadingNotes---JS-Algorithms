@@ -3,7 +3,7 @@
 
 ## 代码剖析
 <details open>
-<summary>收起/查看</summary>
+<summary>收起 / 展开</summary>
 
 ### DoublyLinkedListNode 类 - 节点
 - 用 `this.value` 储存了节点的值
@@ -51,7 +51,7 @@
 
 ## 完整的代码
 <details>
-<summary>收起/查看</summary>
+<summary>收起 / 展开</summary>
 
 ### 节点
 ```js
