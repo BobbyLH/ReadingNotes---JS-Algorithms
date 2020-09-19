@@ -2,15 +2,63 @@
 **双链表** 是在单链表的基础上拓展了一个记录上个节点的指针。你也可以将其视为由两条节点相同，但 下一个(`next`) 指向相反的的单链表组成。双链表开始和结束的节点的上一个(`prev`)和下一个(`next`)链接则只会指向某种终止符(`null`)。如果双链表只有一个节点时，则这个节点无论 `next` 还是 `prev` 都指向的是自己。
 
 ## 代码剖析
+<details open>
+<summary>收起/查看</summary>
 
-### 子节点
+### DoublyLinkedListNode 类 - 节点
+- 用 `this.value` 储存了节点的值
+
+- 用 `this.next` 保存下一个节点的地址
+
+- 实现了一个 `toString` 的方法，用于获取节点的值
+
+  ```js
+  class DoublyLinkedListNode {
+    constructor (value, next = null, previous = null) {
+      this.value = value; // 节点所包含的数据
+      this.next = next; // 节点对下一个节点的引用，初始化时可以为空
+      
+      // 多了个 this.previous 是和单链表的区别之处
+      this.previous = previous; // 顾名思义是该节点对上一个节点的引用，初始化时可以为空
+    }
+
+    // 获取节点数据的方法
+    // 可以接受一个回调函数，并将节点包含的数据作为参数，否则直接返回隐式转换成字符串类型的数据
+    toString (callback) {
+      return callback ? callback(this.value) : `${this.value}`;
+    }
+  }
+  ```
+
+### DoublyLinkedListNode 类 - 双链表
+- 用 `this.head` 保存双链表的头部节点
+
+- 用 `this.tail` 保存双链表的尾部节点
+
+- 实现了一个 `compare` 的方法，用于对比节点的值
+
+  ```js
+  class DoublyLinkedList {
+    constructor (comparatorFunction) {
+      this.head = null; // 双链表头
+      this.tail = null; // 双链表尾
+
+      this.compare = new Comparator(comparatorFunction);
+    }
+  }
+  ```
+</details>
+
+## 完整的代码
+<details>
+<summary>收起/查看</summary>
+
+### 节点
 ```js
 export default class DoublyLinkedListNode {
   constructor (value, next = null, previous = null) {
     this.value = value;
     this.next = next;
-    // 多了个 this.previous 是和单链表的区别之处
-    // 顾名思义是该节点对上一个节点的引用，初始化时可以为空
     this.previous = previous;
   }
 
@@ -21,16 +69,14 @@ export default class DoublyLinkedListNode {
 ```
 
 ### 双链表
-[Comparator 剖析](../utils/comparator.md)
-
 ```js
 import DoublyLinkedListNode from './DoublyLinkedListNode';
 import Comparator from '../../utils/comparator';
 
 class DoublyLinkedList {
   constructor (comparatorFunction) {
-    this.head = null; // 双链表头
-    this.tail = null; // 双链表尾
+    this.head = null;
+    this.tail = null;
 
     this.compare = new Comparator(comparatorFunction);
   }
@@ -290,6 +336,11 @@ class DoublyLinkedList {
   }
 }
 ```
+
+</details>
+
+## 引用的部分
+- [Comparator](../utils/comparator.md)
 
 ## 复杂度
 ### 时间复杂度

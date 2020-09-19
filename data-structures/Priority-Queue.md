@@ -5,7 +5,7 @@
 
 ## 代码剖析
 <details open>
-<summary>展开查看</summary>
+<summary>收起/查看</summary>
 
 ### PriorityQueue 类 - 优先队列
 - 继承自 [MinHeap](https://github.com/BobbyLH/ReadingNotes---JS-Algorithms/blob/master/data-structures/Heap.md#minheap-%E7%B1%BB---%E5%B0%8F%E5%A0%86)
@@ -181,9 +181,8 @@
 </details>
 
 ## 完整的代码
-
 <details>
-<summary>展开查看</summary>
+<summary>收起/查看</summary>
 
 ```js
 import { MinHeap } from './Heap';
@@ -191,51 +190,35 @@ import Comparator from '../../utils/comparator';
 
 export default class PriorityQueue extends MinHeap {
   constructor () {
-    // 调用父类的构造函数
     super();
 
-    // 构造一个 Map，用来保存优先级的映射关系
     this.priority = new Map();
-
-    // 使用自定义的比较方法，兼容带有优先级的比较，而不是使用默认的用 value 的大小来进行比较
-    // 即意味着说，父类的 find、pairIsInCorrectOrder 等方法都会受到影响
-    // 底层的堆的顺序，是按照优先级而不是值的大小来排序
     this.compare = new Comparator(this.comparePriority.bind(this));
   }
 
   add (item, priority = 0) {
-    // 往 Map 里 存储元素和优先级的映射关系
-    // key 值为添加的元素
-    // value 值为元素的优先级
     this.priority.set(item, priority);
-    // 调用父类的 add 方法
-    // 即往一个数组中推入该元素，并按照优先级的顺序进行排序，因为在 constructor 里面已经重新了 this.compare
     super.add(item);
     return this;
   }
 
   remove (item, customFindingComparator) {
-    // 调用父类的 remove 方法，移除所有匹配的元素，并重新排序
     super.remove(item, customFindingComparator);
     this.priority.delete(item);
     return this;
   }
 
   changePriority (item, priority) {
-    // 先移除这个元素
     this.remove(item, new Comparator(this.compareValue));
-    // 绑定优先级后再次添加到优先队列中
     this.add(item, priority);
     return this;
   }
 
   findByValue (item) {
-    // 返回所有匹配元素的索引列表
     return this.find(item, new Comparator(this.compareValue));
   }
 
   hasValue (item) {
-    // 判断的依据是：是否在堆中找到了该元素的索引
     return this.findByValue(item).length > 0;
   }
 

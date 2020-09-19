@@ -9,7 +9,7 @@
 
 ## 代码剖析
 <details open>
-<summary>展开查看</summary>
+<summary>收起/查看</summary>
 
 ### Heap 类 - 堆
 - 使用数组实现即可
@@ -441,9 +441,8 @@
 </details>
 
 ## 完整的代码
-
 <details>
-<summary>展开查看</summary>
+<summary>收起/查看</summary>
 
 ```js
 import Comparator from '../../utils/comparator';
@@ -452,22 +451,19 @@ export default class Heap {
   constructor (comparatorFunction) {
     if (new.target === Heap) throw new TypeError('不能直接构造Heap的实例，请构造 大/小 堆');
 
-    this.heapContainer = []; // 用以保存堆节点的容器
+    this.heapContainer = [];
     this.compare = new Comparator(comparatorFunction);
   }
 
   getLeftChildIndex (parentIndex) {
-    // 比右侧子节点小1
     return (2 * parentIndex) + 1;
   }
 
   getRightChildIndex (parentIndex) {
-    // 比左侧子节点大1
     return (2 * parentIndex) + 2;
   }
 
   getParentIndex (childIndex) {
-    // 向下取整，即为父节点的索引
     return Math.floor((childIndex - 1) / 2);
   }
 
@@ -476,12 +472,10 @@ export default class Heap {
   }
 
   hasLeftChild (parentIndex) {
-    // 左侧节点的索引值 小于 堆容器中节点的总数
     return this.getLeftChildIndex(parentIndex) < this.heapContainer.length;
   }
 
   hasRightChild (parentIndex) {
-    // 右侧节点的索引值 小于 堆容器中节点的总数
     return this.getRightChildIndex(parentIndex) < this.heapContainer.length;
   }
 
@@ -505,7 +499,6 @@ export default class Heap {
 
   peek () {
     if (this.heapContainer.length === 0) {
-      // 没有任何节点
       return null;
     }
 
@@ -514,20 +507,16 @@ export default class Heap {
 
   poll () {
     if (this.heapContainer.length === 0) {
-      // 没有任何节点
       return null;
     }
 
     if (this.heapContainer.length === 1) {
-      //　只有根节点
       return this.heapContainer.pop();
     }
 
     const item = this.heapContainer[0];
 
-    // 将最后的一个节点移到第一位
     this.heapContainer[0] = this.heapContainer.pop();
-    // 从头到尾重新排序
     this.heapifyDown();
 
     return item;
@@ -535,27 +524,21 @@ export default class Heap {
 
   add (item) {
     this.heapContainer.push(item);
-    // 从尾到头重新排序
     this.heapifyUp();
     return this;
   }
 
   remove (item, comparator = this.compare) {
-    // 找出堆中所对应的待删除节点的总长度
     const numberOfItemToRemove = this.find(item, comparator).length;
 
     for (let i = 0; iteration < numberOfItemToRemove; iteration += 1) {
-      // 某个需要移除的节点所对应的索引
       const indexToRemove = this.find(item, comparator).pop();
 
       if (indexToRemove === (this.heapContainer.length - 1)) {
-        // 是最末尾的节点，则直接删除
         this.heapContainer.pop();
       } else {
-        // 将最后一个节点赋移到被删除的节点的位置
         this.heapContainer[indexToRemove] = this.heapContainer.pop();
 
-        // 被删除的节点的父节点
         const parentItem = this.parent(indexToRemove);
 
         if (
@@ -568,13 +551,8 @@ export default class Heap {
             )
            )
         {
-          // 被删除的节点的存在左侧的子节点 且
-          // 没有父节点/是根节点 或是 被删除节点的父节点和其位置正确
-          // 至上而下进行重新排序
           this.heapifyDown();
         } else {
-          // 都不满足，可以推断被删除的节点要么是叶子节点，要么它和父节点的位置本身就不正确
-          // 选择至下而上进行重新排序
           this.heapifyUp();
         }
       }
@@ -604,31 +582,21 @@ export default class Heap {
   }
 
   heapifyUp(customStartIndex) {
-    // 起始的索引，可自定义，默认从最后一个节点开始
     let currentIndex = customStartIndex || this.heapContainer.length - 1;
 
-    // 从起始的索引开始遍历堆
-    // 当前节点不是根节点 且 当前节点和其父节点的位置不正确
-    // 进入到排序逻辑
     while (
       this.hasParent(currentIndex)
       && !this.pairIsInCorrectOrder(this.parent(currentIndex), this.heapContainer[currentIndex])
     ) {
-      // 交换当前节点和其父节点的位置
       this.swap(currentIndex, this.getParentIndex(currentIndex));
-      // 继续排查
-      // 从已经交换过后的当前节点的新的父节点开始 
       currentIndex = this.getParentIndex(currentIndex);
     }
   }
 
   heapifyDown(customStartIndex = 0) {
-    // 起始的索引，可自定义，默认从根节点开始
     let currentIndex = customStartIndex;
-    // 对比节点的索引
     let nextIndex = null;
 
-    // 当前节点有左侧子节点
     while (this.hasLeftChild(currentIndex)) {
       if (
         this.hasRightChild(currentIndex)
@@ -637,13 +605,8 @@ export default class Heap {
           this.leftChild(currentIndex)
         )
       ) {
-        // 若是右侧也有子节点，且该左右两节点的位置正确
-        // 将右侧子节点作为和父节点比较的节点
-        // 保存索引
         nextIndex = this.getRightChildIndex(currentIndex);
       } else {
-        // 将左侧子节点作为和父节点比较的节点
-        // 保存索引
         nextIndex = this.getLeftChildIndex(currentIndex);
       }
 
@@ -651,21 +614,15 @@ export default class Heap {
         this.heapContainer[currentIndex],
         this.heapContainer[nextIndex]
       )) {
-        // 若是位置正确，则跳出遍历
         break;
       }
 
-      // 位置不正确，交换它们的位置
       this.swap(currentIndex, nextIndex);
-      // 继续排查
-      // 从已经交换过后的子节点，即之前的父节点开始 
       currentIndex = nextIndex;
     }
   }
 
   pairIsInCorrectOrder(firstElement, secondElement) {
-    // 直接调用父类的该方法会报错
-    // 应利用多态，从而被子类改写
     throw new Error('请定义子类的 pairIsInCorrectOrder 方法!');
   }
 }
