@@ -16,7 +16,7 @@
 
 - 无法直接构造 `Heap` 的实例，需要指定是 *大堆* 还是 *小堆*
 
-- 入参：
+- 入参(Params)：
     - `comparatorFunction` <Comparator> 自定义的比较函数
 
   ```js
@@ -32,7 +32,7 @@
   ```
 
 #### getLeftChildIndex - 根据父节点的索引，获取左侧子节点的索引
-- 入参：
+- 入参(Params)：
     - `parentIndex` <number> 父节点的索引
 
 - 出参(Returns)：<number> 左侧子节点的索引，比右侧子节点小1
@@ -44,7 +44,7 @@
   ```
 
 #### getRightChildIndex - 根据父节点的索引，获取右侧子节点的索引
-- 入参：
+- 入参(Params)：
     - `parentIndex` <number> 父节点的索引
 
 - 出参(Returns)：<number> 右侧子节点的索引，比左侧子节点大1
@@ -56,7 +56,7 @@
   ```
 
 #### getParentIndex - 根据子节点的索引，获取父节点的索引
-- 入参：
+- 入参(Params)：
     - `childIndex` <number> 子节点的索引
 
 - 出参(Returns)：<number> 父节点的索引，向下取整
@@ -70,7 +70,7 @@
 #### hasParent - 根据子节点的索引，判断父节点是否存在
 - 判断的依据是：父节点的索引是否存在
 
-- 入参：
+- 入参(Params)：
     - `childIndex` <number> 子节点的索引
 
 - 出参(Returns)：<boolean> 父节点是否存在
@@ -84,7 +84,7 @@
 #### hasLeftChild - 根据父节点的索引，判断左侧子节点是否存在
 - 判断的依据是：左侧节点的索引值 是否小于 堆容器中节点的总数
 
-- 入参：
+- 入参(Params)：
     - `parentIndex` <number> 父节点的索引
 
 - 出参(Returns)：<boolean> 左侧子节点是否存在
@@ -98,7 +98,7 @@
 #### hasRightChild - 根据父节点的索引，判断左侧子节点是否存在
 - 判断的依据是：右侧节点的索引值 是否小于 堆容器中节点的总数
 
-- 入参：
+- 入参(Params)：
     - `parentIndex` <number> 父节点的索引
 
 - 出参(Returns)：<boolean> 右侧子节点是否存在
@@ -112,7 +112,7 @@
 #### leftChild - 根据父节点的索引，获取左侧子节点
 - 先获取左侧子节点的索引值
 
-- 入参：
+- 入参(Params)：
     - `parentIndex` <number> 父节点的索引
 
 - 出参(Returns)：<any> 左侧子节点
@@ -126,7 +126,7 @@
 #### rightChild - 根据父节点的索引，获取右侧子节点
 - 先获取右侧子节点的索引值
 
-- 入参：
+- 入参(Params)：
     - `parentIndex` <number> 父节点的索引
 
 - 出参(Returns)：<any> 右侧子节点
@@ -140,7 +140,7 @@
 #### parent - 根据子节点的索引，获取父节点
 - 先获取父节点的索引值
 
-- 入参：
+- 入参(Params)：
     - `childIndex` <number> 子节点的索引
 
 - 出参(Returns)：<any> 父节点
@@ -152,7 +152,7 @@
   ```
 
 #### swap - 交换两个节点的位置
-- 入参：
+- 入参(Params)：
     - `indexOne` <number> 节点一的位置
 
     - `indexTwo` <number> 节点二的位置
@@ -208,7 +208,7 @@
   ```
 
 #### add - 添加节点到堆中
-- 入参：
+- 入参(Params)：
     - `item` <any> 待添加的节点
 
 - 出参(Returns)：<Heap> 返回整个堆
@@ -230,7 +230,7 @@
 
     3. 返回整个全新的堆
 
-- 入参：
+- 入参(Params)：
     - `item` <any> 待删除的节点
 
     - `comparator` <Comparator> 比较节点是否相等的方法
@@ -283,7 +283,7 @@
   ```
 
 #### find - 根据传入的节点，找出其在堆中所对应的节点的全部索引值
-- 入参：
+- 入参(Params)：
     - `item` <any> 被用于查找的节点
 
     - `comparator` <Comparator> 比较节点是否相等的方法，默认使用 `this.compare` 方法进行比较
@@ -332,7 +332,7 @@
 
     - 使用 `this.swap` 交换节点的位置
 
-- 入参：
+- 入参(Params)：
     - `customStartIndex` <number> 自定义起始索引
 
 - 出参(Returns)：<undefined>
@@ -368,7 +368,7 @@
 
     - 使用 `this.swap` 交换节点的位置
 
-- 入参：
+- 入参(Params)：
     - `customStartIndex` <number> 自定义起始索引
 
 - 出参(Returns)：<undefined>
@@ -424,7 +424,7 @@
 #### pairIsInCorrectOrder - 检查堆的两个节点之间的位置是否正确
 - 这个方法需要利用多态的特性，在子类(大/小堆)中重写，直接调用会抛出错误
 
-- 入参：
+- 入参(Params)：
     - `firstElement` <any> 比较的第一个节点
 
     - `secondElement` <any> 比较的第二个节点

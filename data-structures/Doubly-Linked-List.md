@@ -47,47 +47,19 @@
     }
   }
   ```
-</details>
 
-## 完整的代码
-<details>
-<summary>收起 / 展开</summary>
+#### prepend - 往头部追加一个节点
+- 实例化一个 `DoublyLinkedListNode`，并将其 “插入” 到链表的头部
 
-### 节点
-```js
-export default class DoublyLinkedListNode {
-  constructor (value, next = null, previous = null) {
-    this.value = value;
-    this.next = next;
-    this.previous = previous;
-  }
+- 入参(Params)：
+    - `value` <any> 待新增的节点的值
 
-  toString (callback) {
-    return callback ? callback(this.value) : `${this.value}`;
-  }
-}
-```
+- 出参(Returns)：<DoublyLinkedList> 返回链表的整个实例
 
-### 双链表
-```js
-import DoublyLinkedListNode from './DoublyLinkedListNode';
-import Comparator from '../../utils/comparator';
-
-class DoublyLinkedList {
-  constructor (comparatorFunction) {
-    this.head = null;
-    this.tail = null;
-
-    this.compare = new Comparator(comparatorFunction);
-  }
-
-  /**
-   * 往头部追加一个节点
-   * @param {any} value 新增节点的值
-   * @return {DoublyLinkedList}
-   */
+  ```js
   prepend (value) {
-    const newNode = new DoublyLinkedListNode(value, this.head); // 因为是往头部加节点，即意味着新增节点的 this.next 要指向当前的头部节点
+    // 因为是往头部加节点，即意味着新增节点的 this.next 要指向当前的头部节点
+    const newNode = new DoublyLinkedListNode(value, this.head);
 
     if (this.head) {
       // 将当前头部节点的 this.previous 指向新增的节点
@@ -102,12 +74,17 @@ class DoublyLinkedList {
 
     return this;
   }
+  ```
 
-  /**
-   * 往尾部追加一个节点
-   * @param {any} value 新增节点的值
-   * @return {DoublyLinkedList}
-   */
+#### append - 往尾部追加一个节点
+- 实例化一个 `DoublyLinkedListNode`，并将其 “插入” 到链表的尾部
+
+- 入参(Params)：
+    - `value` <any> 待新增的节点的值
+
+- 出参(Returns)：<DoublyLinkedList> 返回链表的整个实例
+
+  ```js
   append (value) {
     const newNode = new DoublyLinkedListNode(value);
 
@@ -128,12 +105,17 @@ class DoublyLinkedList {
 
     return this;
   }
+  ```
 
-  /**
-   * 根据value删除 value与之相同的节点
-   * @param {any} value
-   * @return {DoublyLinkedListNode}
-   */
+#### delete - 根据value删除节点
+- 在一次循环内，使用 `this.compare.equal` 方法，根据传入的值匹配需要删除的所有节点
+
+- 入参(Params)：
+    - `value` <any> 待删除的节点的值
+
+- 出参(Returns)：<DoublyLinkedListNode> 返回删除的节点
+
+  ```js
   delete (value) {
     if (!this.head) {
       // 头部都没有的话，只能是个空链表，因此返回null
@@ -191,12 +173,18 @@ class DoublyLinkedList {
 
     return deleteNode; // 返回被删除的节点
   }
+  ```
+</details>
 
-  /**
-   * 根据value找出对应的节点
-   * @param {{ value: any; callback?: (value: any) => boolean; }} findParams
-   * @return {DoublyLinkedListNode}
-   */
+#### find - 根据value找出对应的节点
+- 在一次循环内，使用 自定义的回调函数 `callback` 或 `this.compare.equal` 方法，找出和参数 value 匹配的节点
+
+- 入参(Params)：
+    - `findParams` <{ value: any; callback?: (value: any) => boolean; }> 查找的参数
+
+- 出参(Returns)：<DoublyLinkedListNode> 返回匹配的节点
+
+  ```js
   find ({
      value = undefined,
      callback = undefined
@@ -226,11 +214,14 @@ class DoublyLinkedList {
     // 整个链表遍历下来都没找到对应的节点，则返回null
     return null;
   }
+  ```
 
-  /**
-   * 删除最后一个节点
-   * @return {DoublyLinkedListNode}
-   */
+#### deleteTail - 删除最后一个节点
+- 删除完成后会重新绑定 `this.tail`
+
+- 出参(Returns)：<DoublyLinkedListNode> 删除的节点
+
+  ```js
   deleteTail () {
     if (!this.head) {
       // 没有 this.head 证明链表内没有任何节点
@@ -243,11 +234,14 @@ class DoublyLinkedList {
 
     return deleteTail;
   }
+  ```
 
-  /**
-   * 删除第一个节点
-   * @return {DoublyLinkedListNode}
-   */
+#### deleteHead - 删除第一个节点
+- 删除完成后会重新绑定 `this.head`
+
+- 出参(Returns)：<DoublyLinkedListNode> 删除的节点
+
+  ```js
   deleteHead () {
     if (!this.head) {
       // 没有 this.head 证明链表内没有任何节点
@@ -267,11 +261,30 @@ class DoublyLinkedList {
 
     return deleteHead;
   }
+  ```
 
-  /**
-   * 将链表的所有节点组装成一个数组后返回
-   * @return {DoublyLinkedListNode[]}
-   */
+#### fromArray - 将一组值作为节点添加到双链表后
+- 遍历传入的值，并调用 `this.append` 将值作为节点添加到链表后
+
+- 入参(Params)：
+    - `values` <any[]> 一组需要被添加成节点的值
+
+- 出参(Returns)：<DoublyLinkedList> 返回整个实例化的双链表
+
+  ```js
+  fromArray (values) {
+    values.forEach(value => this.append(value));
+
+    return this;
+  }
+  ```
+
+#### toArray - 将双链表的所有节点组装成一个数组后返回
+- 从链表头部开始，逐个遍历链表的所有节点，并组合成一个数组后返回
+
+- 出参(Returns)：<DoublyLinkedListNode[]> 返回整个实例化的链表
+
+  ```js
   toArray (values) {
     const nodes = [];
 
@@ -283,33 +296,35 @@ class DoublyLinkedList {
 
     return nodes;
   }
+  ```
 
-  /**
-   * 将一组数据添加为节点
-   * @param {any[]} values - 一组需要被添加成节点的值
-   * @return {DoublyLinkedList}
-   */
-  fromArray (values) {
-    values.forEach(value => this.append(value));
+#### toString - 将双链表中所有节点的值转换成字符串
+- 调用 `this.toArray` 将值链表中的所有节点组装成一个数组
 
-    return this;
-  }
+- 而后遍历整个数组的节点，并调用定义在节点中的 `toString` 方法，将节点转换成字符串
 
-  /**
-   * 将链表中所有节点的值转换成字符串
-   * @param {(value: any) => string} [callback]
-   * @return {string}
-   */
+- 最终对整个数组调用 `toString` 方法，将整个数组隐式转换成字符串
+
+- 入参(Params)：
+    - `callback` <(value: any) => string> 自定义用于将节点转换成字符的回调函数
+
+- 出参(Returns)：<string> 返回整个字符化后的链表
+
+  ```js
   toString (callback) {
     return this.toArray().map(node => node.toString(callback)).toString();
   }
+  ```
 
-  /**
-   * 将链表中节点的顺序完全颠倒
-   * @return {DoublyLinkedList}
-   */
+#### reverse - 将双链表中节点的顺序完全颠倒
+- 本质上来看，就是通过改变每个节点的 `this.next`  和 `this.previous` 属性，实现了颠倒，当然要记得将双链表的 `this.head` 和 `this.tail` 重新赋值
+
+- 出参(Returns)：<DoublyLinkedList> 返回整个实例化的链表
+
+  ```js
   reverse () {
-    let currNode = this.head; // 先从 this.head 开始
+    // 先从 this.head 开始
+    let currNode = this.head;
     let prevNode = null;
     let nextNode = null;
 
@@ -329,6 +344,209 @@ class DoublyLinkedList {
     }
 
     // 最后一步是重置 this.head 和 this.tail
+    this.tail = this.head;
+    this.head = prevNode;
+
+    return this;
+  }
+  ```
+
+## 完整的代码
+<details>
+<summary>收起 / 展开</summary>
+
+### 节点
+```js
+export default class DoublyLinkedListNode {
+  constructor (value, next = null, previous = null) {
+    this.value = value;
+    this.next = next;
+    this.previous = previous;
+  }
+
+  toString (callback) {
+    return callback ? callback(this.value) : `${this.value}`;
+  }
+}
+```
+
+### 双链表
+```js
+import DoublyLinkedListNode from './DoublyLinkedListNode';
+import Comparator from '../../utils/comparator';
+
+class DoublyLinkedList {
+  constructor (comparatorFunction) {
+    this.head = null;
+    this.tail = null;
+
+    this.compare = new Comparator(comparatorFunction);
+  }
+
+  prepend (value) {
+    const newNode = new DoublyLinkedListNode(value, this.head);
+
+    if (this.head) {
+      this.head.previous = newNode;
+    }
+    this.head = newNode;
+    
+    if (!this.tail) {
+      this.tail = newNode;
+    }
+
+    return this;
+  }
+
+  append (value) {
+    const newNode = new DoublyLinkedListNode(value);
+
+    if (!this.head) {
+      this.head = newNode;
+      this.tail = newNode;
+
+      return this;
+    }
+
+    this.tail.next = newNode;
+    newNode.previous = this.tail;
+    this.tail = newNode;
+
+    return this;
+  }
+
+  delete (value) {
+    if (!this.head) {
+      return null;
+    }
+
+    let deleteNode = null;
+    let currentNode = this.head;
+
+    while (currentNode) {
+      if (this.compare.equal(currentNode.value, value)) {
+        deleteNode = currentNode;
+
+        if (deleteNode === this.head) {
+          this.head = deleteNode.next;
+
+          if (this.head) {
+            this.head.previous = null;
+          }
+
+          if (deleteNode === this.tail) {
+            this.tail = null;
+          }
+        } else if (deleteNode === this.tail) {
+          this.tail = deleteNode.previous;
+          this.tail.next = null;
+        } else {
+          const previousNode = deleteNode.previous;
+          const nextNode = deleteNode.next;
+          previousNode.next = nextNode;
+          nextNode.previous = previousNode;
+        }
+      }
+
+      currentNode = currentNode.next;
+    }
+
+    return deleteNode;
+  }
+
+  find ({
+     value = undefined,
+     callback = undefined
+   }) {
+    if (!this.head) {
+      return null;
+    }
+
+    let currentNode = this.head;
+
+    while (currentNode) {
+      if (callback && callback(currentNode.value)) {
+        return currentNode;
+      }
+
+      if (value !== undefined && this.compare.equal(currentNode.value, value)) {
+        return currentNode;
+      }
+
+      currentNode = currentNode.next;
+    }
+
+    return null;
+  }
+
+  deleteTail () {
+    if (!this.head) {
+      return null
+    }
+
+    const deleteTail = this.tail;
+    this.tail = this.tail.previous;
+    this.tail.next = null;
+
+    return deleteTail;
+  }
+
+  deleteHead () {
+    if (!this.head) {
+      return null
+    }
+
+    const deleteHead = this.head;
+
+    if (this.head.next) {
+      this.head = this.tail.next;
+      this.tail.previous = null;
+    } else {
+      this.head = null;
+      this.tail = null;
+    }
+
+    return deleteHead;
+  }
+
+  toArray (values) {
+    const nodes = [];
+
+    let currentNode = this.head;
+    while (currentNode) {
+      nodes.push(currentNode);
+      currentNode = currentNode.next;
+    }
+
+    return nodes;
+  }
+
+  fromArray (values) {
+    values.forEach(value => this.append(value));
+
+    return this;
+  }
+
+  toString (callback) {
+    return this.toArray().map(node => node.toString(callback)).toString();
+  }
+
+  reverse () {
+    let currNode = this.head;
+    let prevNode = null;
+    let nextNode = null;
+
+    while (currNode) {
+      nextNode = currNode.next;
+      prevNode = currNode.previous;
+
+      currNode.next = prevNode;
+      currNode.previous = nextNode;
+
+      prevNode = currNode;
+      currNode = nextNode;
+    }
+
     this.tail = this.head;
     this.head = prevNode;
 
