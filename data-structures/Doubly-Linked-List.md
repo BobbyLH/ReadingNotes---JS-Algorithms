@@ -10,16 +10,22 @@
 
 - 用 `this.next` 保存下一个节点的地址
 
+- 用 `this.previous` 保存上一个节点的地址
+
 - 实现了一个 `toString` 的方法，用于获取节点的值
 
   ```js
   class DoublyLinkedListNode {
     constructor (value, next = null, previous = null) {
-      this.value = value; // 节点所包含的数据
-      this.next = next; // 节点对下一个节点的引用，初始化时可以为空
-      
+      // 节点所包含的数据
+      this.value = value;
+
+      // 节点对下一个节点的引用，初始化时可以为空
+      this.next = next;
+
       // 多了个 this.previous 是和单链表的区别之处
-      this.previous = previous; // 顾名思义是该节点对上一个节点的引用，初始化时可以为空
+      // 顾名思义是该节点对上一个节点的引用，初始化时可以为空
+      this.previous = previous; 
     }
 
     // 获取节点数据的方法
