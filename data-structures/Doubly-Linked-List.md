@@ -174,7 +174,6 @@
     return deleteNode; // 返回被删除的节点
   }
   ```
-</details>
 
 #### find - 根据value找出对应的节点
 - 在一次循环内，使用 自定义的回调函数 `callback` 或 `this.compare.equal` 方法，找出和参数 value 匹配的节点
@@ -350,6 +349,7 @@
     return this;
   }
   ```
+</details>
 
 ## 完整的代码
 <details>
